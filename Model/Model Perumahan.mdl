@@ -1,0 +1,330 @@
+{UTF-8}
+MBR sejahtera  = A FUNCTION OF( Populasi MBR,rasio penghasilan MBR terhadap UMK)
+	~	
+	~		|
+
+rasio pengeluaran untuk pendidikan  = A FUNCTION OF( alokasi pengeluaran per kapita pendidikan\
+		,pengeluaran untuk pendidikan per kapita)
+	~	
+	~		|
+
+rasio penghasilan MBR terhadap UMK  = A FUNCTION OF( UMK,upah tenaga kerja miskin)
+	~	
+	~		|
+
+"rata-rata kebutuhan masyarakat miskin per bulan"  = A FUNCTION OF( Garis Kemiskinan,\
+		UMK)
+	~	
+	~		|
+
+fraksi perubahan garis kemiskinan  = A FUNCTION OF( )
+	~	
+	~		|
+
+"ft pertumbuhan populasi MBR (?)"  = A FUNCTION OF( )
+	~	
+	~		|
+
+Garis Kemiskinan  = A FUNCTION OF( perubahan garis kemiskinan)
+	~	
+	~		|
+
+perubahan garis kemiskinan  = A FUNCTION OF( fraksi perubahan garis kemiskinan,Garis Kemiskinan\
+		)
+	~	
+	~		|
+
+Populasi MBR  = A FUNCTION OF( -MBR sejahtera,peningkatan Populasi MBR)
+	~	
+	~		|
+
+kenaikan upah tenaga kerja miskin  = A FUNCTION OF( kualitas SDM)
+	~	
+	~		|
+
+pengeluaran untuk pendidikan per kapita  = A FUNCTION OF( )
+	~	
+	~		|
+
+kualitas pendidikan  = A FUNCTION OF( rasio pengeluaran untuk pendidikan)
+	~	
+	~		|
+
+peningkatan Populasi MBR  = A FUNCTION OF( "ft pertumbuhan populasi MBR (?)",Populasi MBR\
+		)
+	~	
+	~		|
+
+kualitas kesehatan  = A FUNCTION OF( rasio pengeluaran untuk kesehatan)
+	~	
+	~		|
+
+rasio pengeluaran untuk kesehatan  = A FUNCTION OF( alokasi pengeluaran per kapita kesehatan\
+		,pengeluaran untuk kesehatan per kapita)
+	~	
+	~		|
+
+Lookup UMK  = A FUNCTION OF( )
+	~	
+	~		|
+
+pengeluaran untuk kesehatan per kapita  = A FUNCTION OF( )
+	~	
+	~		|
+
+UMK  = A FUNCTION OF( Lookup UMK)
+	~	
+	~		|
+
+upah tenaga kerja miskin  = A FUNCTION OF( kenaikan upah tenaga kerja miskin,"rata-rata kebutuhan masyarakat miskin per bulan"\
+		)
+	~	
+	~		|
+
+alokasi pengeluaran per kapita kesehatan  = A FUNCTION OF( )
+	~	
+	~		|
+
+alokasi pengeluaran per kapita pendidikan  = A FUNCTION OF( )
+	~	
+	~		|
+
+depresiasi hunian=
+	Jumlah Unit Perumahan dan PSU/umur hunian
+	~	unit/tahun
+	~		|
+
+Durasi Konstruksi=
+	2
+	~	tahun
+	~		|
+
+Jumlah Unit Perumahan dan PSU= INTEG (
+	pembangunan selesai+renovasi hunian-depresiasi hunian,
+		500)
+	~	unit
+	~		|
+
+Kebutuhan Hunian=
+	1000
+	~	unit
+	~		|
+
+ketersediaan biaya pembangunan  = A FUNCTION OF( )
+	~	
+	~		|
+
+ketersediaan biaya renovasi=
+	1
+	~	Dmnl
+	~		|
+
+Ketersediaan Lahan Pembangunan Hunian=
+	1
+	~	Dmnl
+	~		|
+
+kualitas lingkungan  = A FUNCTION OF( )
+	~	
+	~		|
+
+kualitas SDM=
+	(kualitas kesehatan+kualitas lingkungan+kualitas pendidikan)/3
+	~	Dmnl
+	~		|
+
+pembangunan hunian baru  = A FUNCTION OF( ketersediaan biaya pembangunan,Ketersediaan Lahan Pembangunan Hunian\
+		)
+	~	
+	~		|
+
+pembangunan selesai=
+	Pembangunan Unit Perumahan dan PSU/Durasi Konstruksi
+	~	unit/tahun
+	~		|
+
+Pembangunan Unit Perumahan dan PSU= INTEG (
+	pembangunan hunian baru-pembangunan selesai,
+		100)
+	~	unit
+	~		|
+
+renovasi hunian=
+	depresiasi hunian*ketersediaan biaya renovasi
+	~	unit/tahun
+	~		|
+
+Sewa=
+	Kebutuhan Hunian-Jumlah Unit Perumahan dan PSU
+	~	unit
+	~		|
+
+umur hunian=
+	20
+	~	tahun
+	~		|
+
+********************************************************
+	.Control
+********************************************************~
+		Simulation Control Parameters
+	|
+
+FINAL TIME  = 100
+	~	tahun
+	~	The final time for the simulation.
+	|
+
+INITIAL TIME  = 0
+	~	tahun
+	~	The initial time for the simulation.
+	|
+
+SAVEPER  = 
+        TIME STEP
+	~	tahun [0,?]
+	~	The frequency with which output is stored.
+	|
+
+TIME STEP  = 1
+	~	tahun [0,?]
+	~	The time step for the simulation.
+	|
+
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*Perumahan
+$192-192-192,0,Times New Roman|12||0-0-0|0-0-0|0-0-255|-1--1--1|-1--1--1|96,96,110,0
+10,1,Jumlah Unit Perumahan dan PSU,676,324,56,27,3,131,0,0,0,0,0,0,0,0,0,0,0,0
+10,2,Pembangunan Unit Perumahan dan PSU,414,327,55,33,3,131,0,0,0,0,0,0,0,0,0,0,0,0
+1,3,5,1,4,0,0,22,0,0,0,-1--1--1,,1|(579,321)|
+1,4,5,2,100,0,0,22,0,0,0,-1--1--1,,1|(498,321)|
+11,5,750,533,321,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,6,pembangunan selesai,533,340,44,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,7,Durasi Konstruksi,566,244,57,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,8,7,5,1,0,0,0,0,128,0,-1--1--1,,1|(559,279)|
+1,9,2,5,1,0,0,0,0,128,0,-1--1--1,,1|(490,306)|
+10,10,Ketersediaan Lahan Pembangunan Hunian,210,234,69,19,8,3,0,2,0,0,0,0,0-0-0,0-0-0,|12||0-0-255,0,0,0,0,0,0
+12,11,48,888,323,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,12,14,11,4,0,0,22,0,0,0,-1--1--1,,1|(839,321)|
+1,13,14,1,100,0,0,22,0,0,0,-1--1--1,,1|(760,321)|
+11,14,48,795,321,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,15,depresiasi hunian,795,340,53,11,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+12,16,48,218,321,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,17,19,2,4,0,0,22,0,0,0,-1--1--1,,1|(329,321)|
+1,18,19,16,100,0,0,22,0,0,0,-1--1--1,,1|(257,321)|
+11,19,48,293,321,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,20,pembangunan hunian baru,293,348,44,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,21,ketersediaan biaya pembangunan,242,444,59,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,22,21,20,1,0,0,0,0,128,0,-1--1--1,,1|(244,403)|
+1,23,1,14,1,0,0,0,0,128,0,-1--1--1,,1|(738,297)|
+10,24,umur hunian,873,285,38,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,25,24,14,1,0,0,0,0,128,0,-1--1--1,,1|(822,288)|
+12,26,48,661,465,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,27,29,1,4,0,0,22,0,0,0,-1--1--1,,1|(661,373)|
+1,28,29,26,100,0,0,22,0,0,0,-1--1--1,,1|(661,432)|
+11,29,48,661,402,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,30,renovasi hunian,717,402,48,11,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,31,15,30,1,0,0,0,0,128,0,-1--1--1,,1|(741,357)|
+10,32,ketersediaan biaya renovasi,811,462,59,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,33,32,30,1,0,0,0,0,128,0,-1--1--1,,1|(716,432)|
+10,34,Kebutuhan Hunian,893,174,58,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,35,Sewa,715,187,19,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,36,34,35,1,0,0,0,0,128,0,-1--1--1,,1|(761,173)|
+1,37,1,35,1,0,0,0,0,128,0,-1--1--1,,1|(706,251)|
+1,38,10,19,1,0,0,0,0,128,0,-1--1--1,,1|(250,286)|
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*Kualitas Penduduk MBR
+$192-192-192,0,Times New Roman|12||0-0-0|0-0-0|0-0-255|-1--1--1|-1--1--1|96,96,60,0
+10,1,kualitas lingkungan,2039,692,58,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,2,kualitas pendidikan,1696,633,60,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,3,kualitas kesehatan,1836,577,57,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,4,kualitas SDM,1821,721,44,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,5,2,4,1,0,0,0,2,129,0,-1--1--1,|0||-1--1--1,1|(1717,679)|
+1,6,1,4,1,0,0,0,2,129,0,-1--1--1,|0||-1--1--1,1|(1929,651)|
+1,7,3,4,1,0,0,0,2,129,0,-1--1--1,|0||-1--1--1,1|(1824,666)|
+10,8,alokasi pengeluaran per kapita kesehatan,1798,470,75,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,9,alokasi pengeluaran per kapita pendidikan,1560,483,75,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,10,8,18,1,0,0,0,0,128,0,-1--1--1,,1|(1911,473)|
+10,11,pengeluaran untuk pendidikan per kapita,1487,688,69,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,12,11,16,0,0,0,0,0,128,0,-1--1--1,,1|(1514,653)|
+1,13,9,16,1,0,0,0,0,128,0,-1--1--1,,1|(1549,540)|
+10,14,pengeluaran untuk kesehatan per kapita,2098,563,66,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,15,14,18,1,0,0,0,0,128,0,-1--1--1,,1|(2055,528)|
+10,16,rasio pengeluaran untuk pendidikan,1553,609,56,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,17,16,2,1,0,0,0,0,128,0,-1--1--1,,1|(1608,656)|
+10,18,rasio pengeluaran untuk kesehatan,1975,533,56,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,19,18,3,1,0,0,0,0,128,0,-1--1--1,,1|(1902,574)|
+10,20,Garis Kemiskinan,1633,901,52,33,3,131,0,0,0,0,0,0,0,0,0,0,0,0
+12,21,48,1433,886,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,22,24,20,4,0,0,22,0,0,0,-1--1--1,,1|(1549,886)|
+1,23,24,21,100,0,0,22,0,0,0,-1--1--1,,1|(1474,886)|
+11,24,0,1512,886,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,25,perubahan garis kemiskinan,1512,913,50,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,26,fraksi perubahan garis kemiskinan,1398,964,53,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,27,26,25,0,0,0,0,0,128,0,-1--1--1,,1|(1448,941)|
+1,28,20,24,1,0,0,0,0,128,0,-1--1--1,,1|(1550,848)|
+10,29,UMK,1682,988,21,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,30,"rata-rata kebutuhan masyarakat miskin per bulan",1796,918,71,28,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,31,20,30,1,0,0,0,0,128,0,-1--1--1,,1|(1718,894)|
+1,32,29,30,1,0,0,0,0,128,0,-1--1--1,,1|(1737,975)|
+10,33,upah tenaga kerja miskin,1980,921,57,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,34,30,33,0,0,0,0,0,128,0,-1--1--1,,1|(1888,919)|
+10,35,kenaikan upah tenaga kerja miskin,1900,809,69,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,36,35,33,1,0,0,0,0,128,0,-1--1--1,,1|(1909,873)|
+1,37,4,35,1,0,0,0,0,128,0,-1--1--1,,1|(1877,756)|
+10,38,Populasi MBR,1787,1173,40,20,3,3,0,0,0,0,0,0,0,0,0,0,0,0
+12,39,48,1972,1172,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,40,42,39,4,0,0,22,0,0,0,-1--1--1,,1|(1930,1174)|
+1,41,42,38,100,0,0,22,0,0,0,-1--1--1,,1|(1857,1174)|
+11,42,0,1893,1174,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,43,MBR sejahtera,1893,1193,48,11,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+12,44,48,1584,1175,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,45,47,38,4,0,0,22,0,0,0,-1--1--1,,1|(1709,1178)|
+1,46,47,44,100,0,0,22,0,0,0,-1--1--1,,1|(1627,1178)|
+11,47,0,1666,1178,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,48,peningkatan Populasi MBR,1666,1205,47,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,49,38,42,1,0,0,0,0,128,0,-1--1--1,,1|(1853,1160)|
+1,50,38,47,1,0,0,0,0,128,0,-1--1--1,,1|(1701,1158)|
+10,51,rasio penghasilan MBR terhadap UMK,1803,1034,74,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,52,33,51,1,0,0,0,0,128,0,-1--1--1,,1|(1927,996)|
+1,53,29,51,1,0,0,0,0,128,0,-1--1--1,,1|(1701,1001)|
+1,54,51,42,1,0,0,0,0,128,0,-1--1--1,,1|(1872,1098)|
+10,55,"ft pertumbuhan populasi MBR (?)",1523,1239,58,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,56,55,48,1,0,0,0,0,128,0,-1--1--1,,1|(1573,1203)|
+10,57,Lookup UMK,1546,1031,47,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,58,57,29,1,0,0,0,0,128,0,-1--1--1,,1|(1613,1009)|
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*View 3
+$192-192-192,0,Times New Roman|12||0-0-0|0-0-0|0-0-255|-1--1--1|-1--1--1|96,96,120,0
+///---\\\
+:L<%^E!@
+9:Current
+15:0,0,0,0,0,0
+19:60,1
+27:0,
+34:0,
+42:1
+72:0
+73:0
+5:MBR sejahtera
+35:Date
+36:YYYY-MM-DD
+37:2000
+38:1
+39:1
+40:2
+41:0
+76:0
+77:0
+78:0
+79:0
+80:0
+81:0
+24:0
+25:0
+26:0
+75:
+43:
