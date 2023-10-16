@@ -1,92 +1,174 @@
 {UTF-8}
-MBR sejahtera  = A FUNCTION OF( Populasi MBR,rasio penghasilan MBR terhadap UMK)
-	~	
+aktual pengeluaran untuk kesehatan=
+	MIN(Pengeluaran untuk Kebutuhan Kesehatan ydi, potensi pengeluaran untuk kesehatan
+	)
+	~	Rupiah/(tahun*jiwa)
 	~		|
 
-rasio pengeluaran untuk pendidikan  = A FUNCTION OF( alokasi pengeluaran per kapita pendidikan\
-		,pengeluaran untuk pendidikan per kapita)
-	~	
+aktual pengeluaran untuk pendidikan=
+	MIN(Pengeluaran untuk Kebutuhan Pendidikan ydi, potensi pengeluaran untuk pendidikan
+	)
+	~	Rupiah/(tahun*jiwa)
 	~		|
 
-rasio penghasilan MBR terhadap UMK  = A FUNCTION OF( UMK,upah tenaga kerja miskin)
-	~	
+kas awal= INITIAL(
+	pengeluaran yang dibutuhkan awal*waktu kecukupan kas)
+	~	Rupiah/jiwa
 	~		|
 
-"rata-rata kebutuhan masyarakat miskin per bulan"  = A FUNCTION OF( Garis Kemiskinan,\
-		UMK)
-	~	
+Pengeluaran untuk Kebutuhan Kesehatan ydi Awal=
+	Pengeluaran untuk Kebutuhan Kesehatan ydi per Bulan*jumlah bulan dalam 1 tahun
+	~	Rupiah/(tahun*jiwa)
 	~		|
 
-fraksi perubahan garis kemiskinan  = A FUNCTION OF( )
-	~	
+kas ydi=
+	total pengeluaran ydi*waktu kecukupan kas
+	~	Rupiah/jiwa
 	~		|
 
-"ft pertumbuhan populasi MBR (?)"  = A FUNCTION OF( )
-	~	
+fr laju pengubah produktivitas MBR=
+	0.01
+	~	1/tahun
 	~		|
 
-Garis Kemiskinan  = A FUNCTION OF( perubahan garis kemiskinan)
-	~	
+Pengeluaran untuk Kebutuhan Pendidikan ydi Awal=
+	Pengeluaran untuk Kebutuhan Pendidikan ydi per Bulan*jumlah bulan dalam 1 tahun
+	~	Rupiah/(tahun*jiwa)
 	~		|
 
-perubahan garis kemiskinan  = A FUNCTION OF( fraksi perubahan garis kemiskinan,Garis Kemiskinan\
-		)
-	~	
+rasio pengeluaran untuk pendidikan=
+	ZIDZ(aktual pengeluaran untuk pendidikan,Pengeluaran untuk Kebutuhan Pendidikan ydi)
+	~	Dmnl
 	~		|
 
-Populasi MBR  = A FUNCTION OF( -MBR sejahtera,peningkatan Populasi MBR)
-	~	
+efek produktivitas MBR thd kenaikan upah tenaha kerja mbr= WITH LOOKUP (
+	produktivitas MBR relative,
+		([(0,0)-(2,2)],(0,0),(1,1),(1.5,1.5),(2,2) ))
+	~	Dmnl
 	~		|
 
-kenaikan upah tenaga kerja miskin  = A FUNCTION OF( kualitas SDM)
-	~	
+ketersediaan kas=
+	Kas MBR per Kapita/kas ydi
+	~	Dmnl
 	~		|
 
-pengeluaran untuk pendidikan per kapita  = A FUNCTION OF( )
-	~	
+laju pengubah produktivitas MBR=
+	kualitas SDM*Produktivitas MBR*fr laju pengubah produktivitas MBR
+	~	Rupiah/(tahun*tahun*jiwa)
 	~		|
 
-kualitas pendidikan  = A FUNCTION OF( rasio pengeluaran untuk pendidikan)
-	~	
+pengeluaran yang dibutuhkan awal=
+	total pengeluaran ydi
+	~	Rupiah/(tahun*jiwa)
 	~		|
 
-peningkatan Populasi MBR  = A FUNCTION OF( "ft pertumbuhan populasi MBR (?)",Populasi MBR\
-		)
-	~	
+Produktivitas MBR= INTEG (
+	laju pengubah produktivitas MBR,
+		Produktivitas MBR Awal)
+	~	Rupiah/(tahun*jiwa)
 	~		|
 
-kualitas kesehatan  = A FUNCTION OF( rasio pengeluaran untuk kesehatan)
-	~	
+sisa alokasi dari kesehatan=
+	MAX(0, potensi pengeluaran untuk kesehatan-aktual pengeluaran untuk kesehatan)
+	~	Rupiah/(tahun*jiwa)
 	~		|
 
-rasio pengeluaran untuk kesehatan  = A FUNCTION OF( alokasi pengeluaran per kapita kesehatan\
-		,pengeluaran untuk kesehatan per kapita)
-	~	
+sisa alokasi dari pendidikan=
+	MAX(0, potensi pengeluaran untuk pendidikan-aktual pengeluaran untuk pendidikan)
+	~	Rupiah/(tahun*jiwa)
 	~		|
 
-Lookup UMK  = A FUNCTION OF( )
-	~	
+Kas MBR per Kapita= INTEG (
+	pendapatan MBR-pengeluaran MBR,
+		kas awal)
+	~	Rupiah/jiwa
 	~		|
 
-pengeluaran untuk kesehatan per kapita  = A FUNCTION OF( )
-	~	
+jumlah bulan dalam 1 tahun=
+	12
+	~	bulan/tahun
 	~		|
 
-UMK  = A FUNCTION OF( Lookup UMK)
-	~	
+rasio pengeluaran untuk kesehatan=
+	aktual pengeluaran untuk kesehatan/Pengeluaran untuk Kebutuhan Kesehatan ydi
+	~	Dmnl
 	~		|
 
-upah tenaga kerja miskin  = A FUNCTION OF( kenaikan upah tenaga kerja miskin,"rata-rata kebutuhan masyarakat miskin per bulan"\
-		)
-	~	
+perubahan garis kemiskinan=
+	fraksi perubahan garis kemiskinan per tahun*Garis Kemiskinan
+	~	Rupiah/(bulan*tahun*jiwa)
 	~		|
 
-alokasi pengeluaran per kapita kesehatan  = A FUNCTION OF( )
-	~	
+pengeluaran untuk konsumsi dan kebutuhan lainnya=
+	MIN(pengeluaran MBR,Pengeluaran untuk Konsumsi dan Kebutuhan Lainnya ydi)
+	~	Rupiah/(tahun*jiwa)
 	~		|
 
-alokasi pengeluaran per kapita pendidikan  = A FUNCTION OF( )
-	~	
+potensi pengeluaran untuk pendidikan=
+	rasio pengeluaran untuk kebutuhan pendidikan ydi*sisa alokasi pengeluaran
+	~	Rupiah/(tahun*jiwa)
+	~		|
+
+sisa alokasi pengeluaran=
+	MAX(0, pengeluaran MBR-pengeluaran untuk konsumsi dan kebutuhan lainnya)
+	~	Rupiah/(tahun*jiwa)
+	~		|
+
+Produktivitas MBR Awal= INITIAL(
+	"rata-rata kebutuhan konsumsi dan lainnya MBR per bulan"*jumlah bulan dalam 1 tahun)
+	~	Rupiah/(tahun*jiwa)
+	~		|
+
+pengeluaran MBR=
+	efek ketersediaan kas*total pengeluaran ydi
+	~	Rupiah/(tahun*jiwa)
+	~		|
+
+produktivitas MBR relative=
+	Produktivitas MBR/Produktivitas MBR Awal
+	~	Dmnl
+	~		|
+
+Pengeluaran untuk Konsumsi dan Kebutuhan Lainnya ydi Awal= INITIAL(
+	"rata-rata kebutuhan konsumsi dan lainnya MBR per bulan"*jumlah bulan dalam 1 tahun)
+	~	Rupiah/(tahun*jiwa)
+	~		|
+
+pendapatan MBR=
+	"rata-rata upah tenaga kerja MBR per kapita"*jumlah bulan dalam 1 tahun
+	~	Rupiah/(tahun*jiwa)
+	~		|
+
+total pengeluaran ydi=
+	Pengeluaran untuk Kebutuhan Kesehatan ydi+Pengeluaran untuk Kebutuhan Pendidikan ydi\
+		+Pengeluaran untuk Konsumsi dan Kebutuhan Lainnya ydi
+	~	Rupiah/(tahun*jiwa)
+	~		|
+
+potensi pengeluaran untuk kesehatan=
+	rasio pengeluaran untuk kebutuhan kesehatan ydi*sisa alokasi pengeluaran
+	~	Rupiah/(tahun*jiwa)
+	~		|
+
+waktu kecukupan kas=
+	1
+	~	tahun
+	~		|
+
+Backlog Perumahan dan PSU= INTEG (
+	penambahan hunian-perumahan terpenuhi,
+		Backlog Perumahan dan PSU Awal)
+	~	unit
+	~		|
+
+Backlog Perumahan dan PSU Awal= INITIAL(
+	total kebutuhan hunian-Jumlah Unit Perumahan dan PSU)
+	~	unit
+	~		|
+
+Backlog Perumahan dan PSU Relative=
+	Backlog Perumahan dan PSU/Backlog Perumahan dan PSU Awal
+	~	Dmnl
 	~		|
 
 depresiasi hunian=
@@ -99,19 +181,95 @@ Durasi Konstruksi=
 	~	tahun
 	~		|
 
+efek ketersediaan kas= WITH LOOKUP (
+	ketersediaan kas,
+		([(0,0)-(10,10)],(0,0),(1,1) ))
+	~	Dmnl
+	~		|
+
+efek rasio penghasian MBR thd UMK denan MBR sejahtera= WITH LOOKUP (
+	rasio penghasilan MBR terhadap UMK,
+		([(0,0)-(2,1)],(0,0),(1,0),(2,1) ))
+	~	Dmnl
+	~		|
+
+fr peningklatan pengeluaran untuk kebutuhan kesehatan ydi=
+	0.001
+	~	1/tahun
+	~		|
+
+fr peningklatan pengeluaran untuk kebutuhan pendidikan ydi=
+	0.001
+	~	1/tahun
+	~		|
+
+fr peningklatan pengeluaran untuk konsumsi dan kebutuhan lainnya ydi=
+	0.08
+	~	1/tahun
+	~		|
+
+fraksi perubahan garis kemiskinan per tahun=
+	tabel fraksi perubahan garius kemiskinan per tahun(INDEKS WAKTU)
+	~	1/tahun
+	~		|
+
+Fraksi perubahan UMK(
+	[(2000,0)-(2030,2222)],(2000,1),(2001,1),(2002,1),(2003,1),(2004,1),(2005,1),(2006,1\
+		),(2007,1),(2008,1),(2009,1),(2010,1),(2011,1),(2012,1),(2013,1),(2014,1),(2015,1),\
+		(2016,1),(2017,1),(2018,1),(2019,1),(2020,1.05),(2030,1.2))
+	~	Dmnl
+	~		|
+
+"ft pertumbuhan populasi MBR (?)"=
+	0.002
+	~	1/tahun
+	~		|
+
+Garis Kemiskinan= INTEG (
+	perubahan garis kemiskinan,
+		258155)
+	~	Rupiah/(jiwa*bulan)
+	~		|
+
+INDEKS WAKTU=
+	Time/SATUAN INDEKS WAKTU
+	~	Dmnl
+	~		|
+
+Iuran BPSJ per Bulan per Orang=
+	75000
+	~	Rupiah/(bulan*jiwa)
+	~		|
+
+jumlah anggota keluarga per Kk=
+	4
+	~	jiwa/kk
+	~		|
+
+jumlah kk MBR=
+	Populasi MBR/jumlah anggota keluarga per Kk
+	~	kk
+	~		|
+
 Jumlah Unit Perumahan dan PSU= INTEG (
 	pembangunan selesai+renovasi hunian-depresiasi hunian,
 		500)
 	~	unit
 	~		|
 
-Kebutuhan Hunian=
-	1000
-	~	unit
+kebutuhan hunian per kk=
+	1
+	~	unit/kk
 	~		|
 
-ketersediaan biaya pembangunan  = A FUNCTION OF( )
-	~	
+kenaikan upah tenaga kerja MBR=
+	efek produktivitas MBR thd kenaikan upah tenaha kerja mbr
+	~	Dmnl
+	~		|
+
+ketersediaan biaya pembangunan=
+	1
+	~	Dmnl
 	~		|
 
 ketersediaan biaya renovasi=
@@ -119,13 +277,26 @@ ketersediaan biaya renovasi=
 	~	Dmnl
 	~		|
 
-Ketersediaan Lahan Pembangunan Hunian=
+"Ketersediaan Lahan Pembangunan Hunian (?)"=
 	1
 	~	Dmnl
 	~		|
 
-kualitas lingkungan  = A FUNCTION OF( )
-	~	
+kualitas kesehatan=
+	rasio pengeluaran untuk kesehatan
+	~	Dmnl
+	~		|
+
+kualitas lingkungan= WITH LOOKUP (
+	Backlog Perumahan dan PSU Relative,
+		([(0,0)-(1,1)],(0,1),(1,0.01) ))
+	~	Dmnl
+	~		|
+
+kualitas pendidikan= WITH LOOKUP (
+	rasio pengeluaran untuk pendidikan,
+		([(0,0)-(10,10)],(0,0),(1,1) ))
+	~	Dmnl
 	~		|
 
 kualitas SDM=
@@ -133,9 +304,23 @@ kualitas SDM=
 	~	Dmnl
 	~		|
 
-pembangunan hunian baru  = A FUNCTION OF( ketersediaan biaya pembangunan,Ketersediaan Lahan Pembangunan Hunian\
-		)
-	~	
+Lookup UMK(
+	[(2000,0)-(2030,4e+06)],(2000,286000),(2001,386000),(2002,471000),(2003,583000),(2004\
+		,562428),(2005,642590),(2006,746500),(2007,860565),(2008,939000),(2009,1.04463e+06)\
+		,(2010,1.118e+06),(2011,1.18844e+06),(2012,1.27163e+06),(2013,1.5387e+06),(2014,2e+06\
+		),(2015,2.31e+06),(2016,2.62694e+06),(2017,2.84366e+06),(2018,3.09135e+06),(2019,3.33958e+06\
+		),(2030,3.34e+06))
+	~	Rupiah/jiwa/bulan
+	~		|
+
+MBR sejahtera=
+	efek rasio penghasian MBR thd UMK denan MBR sejahtera*Populasi MBR/waktu penyesuaian transisi MBR ke sejahtera
+	~	jiwa/tahun
+	~		|
+
+pembangunan hunian baru=
+	pertumbuhan kebutuhan hunian*ketersediaan biaya pembangunan*"Ketersediaan Lahan Pembangunan Hunian (?)"
+	~	unit/tahun
 	~		|
 
 pembangunan selesai=
@@ -149,18 +334,140 @@ Pembangunan Unit Perumahan dan PSU= INTEG (
 	~	unit
 	~		|
 
+penambahan hunian=
+	pertumbuhan kebutuhan hunian
+	~	unit/tahun
+	~		|
+
+Pengeluaran untuk Kebutuhan Kesehatan ydi= INTEG (
+	peningkatan pengeluaran untuk kebutuhan kesehatan ydi,
+		Pengeluaran untuk Kebutuhan Kesehatan ydi Awal)
+	~	Rupiah/(tahun*jiwa)
+	~		|
+
+Pengeluaran untuk Kebutuhan Kesehatan ydi per Bulan=
+	Iuran BPSJ per Bulan per Orang
+	~	Rupiah/(bulan*jiwa)
+	~		|
+
+Pengeluaran untuk Kebutuhan Pendidikan ydi= INTEG (
+	peningkatan pengeluaran untuk kebutuhan pendidikan ydi,
+		Pengeluaran untuk Kebutuhan Pendidikan ydi Awal)
+	~	Rupiah/(tahun*jiwa)
+	~		|
+
+Pengeluaran untuk Kebutuhan Pendidikan ydi per Bulan=
+	200000
+	~	Rupiah/(bulan*jiwa)
+	~		|
+
+Pengeluaran untuk Konsumsi dan Kebutuhan Lainnya ydi= INTEG (
+	peningkatan pengeluaran untuk konsumsi dan kebutuhan lainnya ydi,
+		Pengeluaran untuk Konsumsi dan Kebutuhan Lainnya ydi Awal)
+	~	Rupiah/(tahun*jiwa)
+	~		|
+
+peningkatan pengeluaran untuk kebutuhan kesehatan ydi=
+	fr peningklatan pengeluaran untuk kebutuhan kesehatan ydi*Pengeluaran untuk Kebutuhan Kesehatan ydi
+	~	Rupiah/(tahun*tahun*jiwa)
+	~		|
+
+peningkatan pengeluaran untuk kebutuhan pendidikan ydi=
+	Pengeluaran untuk Kebutuhan Pendidikan ydi*fr peningklatan pengeluaran untuk kebutuhan pendidikan ydi
+	~	Rupiah/(tahun*tahun*jiwa)
+	~		|
+
+peningkatan pengeluaran untuk konsumsi dan kebutuhan lainnya ydi=
+	fr peningklatan pengeluaran untuk konsumsi dan kebutuhan lainnya ydi*Pengeluaran untuk Konsumsi dan Kebutuhan Lainnya ydi
+	~	Rupiah/(tahun*tahun*jiwa)
+	~		|
+
+peningkatan Populasi MBR=
+	"ft pertumbuhan populasi MBR (?)"*Populasi MBR
+	~	jiwa/tahun
+	~		|
+
+pertumbuhan kebutuhan hunian=
+	(kebutuhan hunian per kk*pertumbuhan kk MBR) + depresiasi hunian
+	~	unit/tahun
+	~		|
+
+pertumbuhan kk MBR=
+	peningkatan Populasi MBR/jumlah anggota keluarga per Kk
+	~	kk/tahun
+	~		|
+
+perumahan terpenuhi=
+	pembangunan selesai+renovasi hunian
+	~	unit/tahun
+	~		|
+
+Populasi MBR= INTEG (
+	peningkatan Populasi MBR-MBR sejahtera,
+		10000)
+	~	jiwa
+	~		|
+
+rasio pengeluaran untuk kebutuhan kesehatan ydi=
+	ZIDZ(Pengeluaran untuk Kebutuhan Kesehatan ydi,(Pengeluaran untuk Kebutuhan Kesehatan ydi\
+		+Pengeluaran untuk Kebutuhan Pendidikan ydi))
+	~	Dmnl
+	~		|
+
+rasio pengeluaran untuk kebutuhan pendidikan ydi=
+	1-rasio pengeluaran untuk kebutuhan kesehatan ydi
+	~	Dmnl
+	~		|
+
+rasio penghasilan MBR terhadap UMK=
+	"rata-rata upah tenaga kerja MBR per kapita"/UMK
+	~	Dmnl
+	~		|
+
+"rata-rata kebutuhan konsumsi dan lainnya MBR per bulan"=
+	(((0.5)*Garis Kemiskinan)+((0.5)*(UMK/4)*0.8))
+	~	Rupiah/(bulan*jiwa)
+	~	berdasarkan model PUPR
+	|
+
+"rata-rata upah tenaga kerja MBR per kapita"=
+	kenaikan upah tenaga kerja MBR*"rata-rata kebutuhan konsumsi dan lainnya MBR per bulan"
+	~	Rupiah/(bulan*jiwa)
+	~		|
+
 renovasi hunian=
 	depresiasi hunian*ketersediaan biaya renovasi
 	~	unit/tahun
 	~		|
 
-Sewa=
-	Kebutuhan Hunian-Jumlah Unit Perumahan dan PSU
+SATUAN INDEKS WAKTU=
+	1
+	~	tahun
+	~		|
+
+tabel fraksi perubahan garius kemiskinan per tahun(
+	[(2000,0)-(2050,0.3)],(2000,0.2),(2005,0.17),(2007,0.135),(2010,0.125),(2011,0.0713)\
+		,(2012,0.0776),(2013,0.0492),(2014,0.0492),(2015,0.035),(2016,0.02),(2050,0.01))
+	~	1/tahun
+	~		|
+
+total kebutuhan hunian=
+	jumlah kk MBR*kebutuhan hunian per kk
 	~	unit
+	~		|
+
+UMK=
+	Lookup UMK(INDEKS WAKTU)*Fraksi perubahan UMK(INDEKS WAKTU)
+	~	Rupiah/(bulan*jiwa)
 	~		|
 
 umur hunian=
 	20
+	~	tahun
+	~		|
+
+waktu penyesuaian transisi MBR ke sejahtera=
+	1
 	~	tahun
 	~		|
 
@@ -170,23 +477,22 @@ umur hunian=
 		Simulation Control Parameters
 	|
 
-FINAL TIME  = 100
+FINAL TIME  = 2030
 	~	tahun
 	~	The final time for the simulation.
 	|
 
-INITIAL TIME  = 0
+INITIAL TIME  = 2000
 	~	tahun
 	~	The initial time for the simulation.
 	|
 
-SAVEPER  = 
-        TIME STEP
+SAVEPER  = 1
 	~	tahun [0,?]
 	~	The frequency with which output is stored.
 	|
 
-TIME STEP  = 1
+TIME STEP  = 0.125
 	~	tahun [0,?]
 	~	The time step for the simulation.
 	|
@@ -194,122 +500,324 @@ TIME STEP  = 1
 \\\---/// Sketch information - do not modify anything except names
 V300  Do not put anything below this section - it will be ignored
 *Perumahan
-$192-192-192,0,Times New Roman|12||0-0-0|0-0-0|0-0-255|-1--1--1|-1--1--1|96,96,110,0
-10,1,Jumlah Unit Perumahan dan PSU,676,324,56,27,3,131,0,0,0,0,0,0,0,0,0,0,0,0
-10,2,Pembangunan Unit Perumahan dan PSU,414,327,55,33,3,131,0,0,0,0,0,0,0,0,0,0,0,0
-1,3,5,1,4,0,0,22,0,0,0,-1--1--1,,1|(579,321)|
-1,4,5,2,100,0,0,22,0,0,0,-1--1--1,,1|(498,321)|
-11,5,750,533,321,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
-10,6,pembangunan selesai,533,340,44,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
-10,7,Durasi Konstruksi,566,244,57,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
-1,8,7,5,1,0,0,0,0,128,0,-1--1--1,,1|(559,279)|
-1,9,2,5,1,0,0,0,0,128,0,-1--1--1,,1|(490,306)|
-10,10,Ketersediaan Lahan Pembangunan Hunian,210,234,69,19,8,3,0,2,0,0,0,0,0-0-0,0-0-0,|12||0-0-255,0,0,0,0,0,0
-12,11,48,888,323,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
-1,12,14,11,4,0,0,22,0,0,0,-1--1--1,,1|(839,321)|
-1,13,14,1,100,0,0,22,0,0,0,-1--1--1,,1|(760,321)|
-11,14,48,795,321,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
-10,15,depresiasi hunian,795,340,53,11,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
-12,16,48,218,321,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
-1,17,19,2,4,0,0,22,0,0,0,-1--1--1,,1|(329,321)|
-1,18,19,16,100,0,0,22,0,0,0,-1--1--1,,1|(257,321)|
-11,19,48,293,321,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
-10,20,pembangunan hunian baru,293,348,44,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
-10,21,ketersediaan biaya pembangunan,242,444,59,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
-1,22,21,20,1,0,0,0,0,128,0,-1--1--1,,1|(244,403)|
-1,23,1,14,1,0,0,0,0,128,0,-1--1--1,,1|(738,297)|
-10,24,umur hunian,873,285,38,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
-1,25,24,14,1,0,0,0,0,128,0,-1--1--1,,1|(822,288)|
-12,26,48,661,465,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
-1,27,29,1,4,0,0,22,0,0,0,-1--1--1,,1|(661,373)|
-1,28,29,26,100,0,0,22,0,0,0,-1--1--1,,1|(661,432)|
-11,29,48,661,402,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
-10,30,renovasi hunian,717,402,48,11,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
-1,31,15,30,1,0,0,0,0,128,0,-1--1--1,,1|(741,357)|
-10,32,ketersediaan biaya renovasi,811,462,59,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
-1,33,32,30,1,0,0,0,0,128,0,-1--1--1,,1|(716,432)|
-10,34,Kebutuhan Hunian,893,174,58,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
-10,35,Sewa,715,187,19,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
-1,36,34,35,1,0,0,0,0,128,0,-1--1--1,,1|(761,173)|
-1,37,1,35,1,0,0,0,0,128,0,-1--1--1,,1|(706,251)|
-1,38,10,19,1,0,0,0,0,128,0,-1--1--1,,1|(250,286)|
+$192-192-192,0,Times New Roman|12||0-0-0|0-0-0|0-0-255|-1--1--1|-1--1--1|96,96,100,0
+10,1,Jumlah Unit Perumahan dan PSU,1180,232,56,27,3,131,0,0,0,0,0,0,0,0,0,0,0,0
+10,2,Pembangunan Unit Perumahan dan PSU,918,235,55,33,3,131,0,0,0,0,0,0,0,0,0,0,0,0
+1,3,5,1,4,0,0,22,0,0,0,-1--1--1,,1|(1083,229)|
+1,4,5,2,100,0,0,22,0,0,0,-1--1--1,,1|(1002,229)|
+11,5,1718,1037,229,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,6,pembangunan selesai,1037,248,44,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,7,Durasi Konstruksi,1084,167,57,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,8,7,5,1,0,0,0,0,128,0,-1--1--1,,1|(1062,195)|
+1,9,2,5,1,0,0,0,0,128,0,-1--1--1,,1|(994,214)|
+10,10,"Ketersediaan Lahan Pembangunan Hunian (?)",714,142,80,19,8,3,0,2,0,0,0,0,0-0-0,0-0-0,|12||0-0-255,0,0,0,0,0,0
+12,11,48,1392,231,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,12,14,11,4,0,0,22,0,0,0,-1--1--1,,1|(1343,229)|
+1,13,14,1,100,0,0,22,0,0,0,-1--1--1,,1|(1264,229)|
+11,14,48,1299,229,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,15,depresiasi hunian,1299,248,53,11,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+12,16,48,722,229,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,17,19,2,4,0,0,22,0,0,0,-1--1--1,,1|(833,229)|
+1,18,19,16,100,0,0,22,0,0,0,-1--1--1,,1|(761,229)|
+11,19,48,797,229,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,20,pembangunan hunian baru,797,256,44,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,21,ketersediaan biaya pembangunan,870,136,59,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,22,21,19,1,0,0,0,0,128,0,-1--1--1,,1|(845,181)|
+1,23,1,14,1,0,0,0,0,128,0,-1--1--1,,1|(1242,205)|
+10,24,umur hunian,1377,193,38,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,25,24,14,1,0,0,0,0,128,0,-1--1--1,,1|(1326,196)|
+12,26,48,1165,373,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,27,29,1,4,0,0,22,0,0,0,-1--1--1,,1|(1165,281)|
+1,28,29,26,100,0,0,22,0,0,0,-1--1--1,,1|(1165,340)|
+11,29,48,1165,310,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,30,renovasi hunian,1221,310,48,11,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,31,15,30,1,0,0,0,0,128,0,-1--1--1,,1|(1245,265)|
+10,32,ketersediaan biaya renovasi,1315,370,59,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,33,32,30,1,0,0,0,0,128,0,-1--1--1,,1|(1220,340)|
+1,34,10,19,1,0,0,0,0,128,0,-1--1--1,,1|(754,194)|
+10,35,Backlog Perumahan dan PSU,888,441,59,30,3,131,0,0,0,0,0,0,0,0,0,0,0,0
+12,36,48,1113,436,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,37,39,36,4,0,0,22,0,0,0,-1--1--1,,1|(1063,436)|
+1,38,39,35,100,0,0,22,0,0,0,-1--1--1,,1|(979,436)|
+11,39,48,1017,436,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,40,perumahan terpenuhi,1017,463,35,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,41,pertumbuhan kebutuhan hunian,687,319,55,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+12,42,48,672,438,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,43,45,35,4,0,0,22,0,0,0,-1--1--1,,1|(790,437)|
+1,44,45,42,100,0,0,22,0,0,0,-1--1--1,,1|(711,437)|
+11,45,48,746,437,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,46,penambahan hunian,746,464,41,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,47,41,45,1,0,0,0,0,128,0,-1--1--1,,1|(734,386)|
+1,48,41,20,1,0,0,0,0,128,0,-1--1--1,,1|(715,277)|
+1,49,6,39,1,0,0,0,0,128,0,-1--1--1,,1|(1014,336)|
+10,50,peningkatan Populasi MBR,526,167,52,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128,0,0,0,0,0,0
+10,51,pertumbuhan kk MBR,516,265,52,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,52,jumlah anggota keluarga per Kk,354,279,53,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,53,52,51,0,0,0,0,0,128,0,-1--1--1,,1|(428,272)|
+1,54,50,51,0,0,0,0,0,128,0,-1--1--1,,1|(521,209)|
+10,55,kebutuhan hunian per kk,517,404,55,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,56,51,41,0,0,0,0,0,128,0,-1--1--1,,1|(593,288)|
+1,57,55,41,0,0,0,0,0,128,0,-1--1--1,,1|(595,364)|
+10,58,depresiasi hunian,864,329,37,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128,0,0,0,0,0,0
+1,59,58,41,0,0,0,0,0,128,0,-1--1--1,,1|(791,324)|
+1,60,29,39,1,0,0,0,0,128,0,-1--1--1,,1|(1088,370)|
+10,61,Backlog Perumahan dan PSU Awal,820,543,64,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,62,61,35,0,0,0,0,0,128,1,-1--1--1,,1|(846,503)|
+10,63,Backlog Perumahan dan PSU Relative,1011,547,64,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,64,61,63,0,0,0,0,0,128,0,-1--1--1,,1|(908,544)|
+1,65,35,63,0,0,0,0,0,128,0,-1--1--1,,1|(949,494)|
+10,66,Populasi MBR,595,665,56,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128,0,0,0,0,0,0
+10,67,jumlah anggota keluarga per Kk,439,605,57,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128,0,0,0,0,0,0
+10,68,jumlah kk MBR,582,604,51,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,69,67,68,0,0,0,0,0,128,0,-1--1--1,,1|(506,604)|
+1,70,66,68,0,0,0,0,0,128,0,-1--1--1,,1|(590,641)|
+10,71,kebutuhan hunian per kk,494,538,60,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128,0,0,0,0,0,0
+10,72,total kebutuhan hunian,661,549,49,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,73,71,72,0,0,0,0,0,128,0,-1--1--1,,1|(576,542)|
+1,74,68,72,1,0,0,0,0,128,0,-1--1--1,,1|(608,575)|
+1,75,72,61,0,0,0,0,0,128,1,-1--1--1,,1|(726,546)|
+10,76,Jumlah Unit Perumahan dan PSU,811,630,71,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128,0,0,0,0,0,0
+1,77,76,61,0,0,0,0,0,128,1,-1--1--1,,1|(814,593)|
 \\\---/// Sketch information - do not modify anything except names
 V300  Do not put anything below this section - it will be ignored
 *Kualitas Penduduk MBR
-$192-192-192,0,Times New Roman|12||0-0-0|0-0-0|0-0-255|-1--1--1|-1--1--1|96,96,140,0
-10,1,kualitas lingkungan,846,59,58,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
-10,2,kualitas pendidikan,503,0,60,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
-10,3,kualitas kesehatan,643,-56,57,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
-10,4,kualitas SDM,628,88,44,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
-1,5,2,4,1,0,0,0,2,129,0,-1--1--1,|0||-1--1--1,1|(524,46)|
-1,6,1,4,1,0,0,0,2,129,0,-1--1--1,|0||-1--1--1,1|(736,18)|
-1,7,3,4,1,0,0,0,2,129,0,-1--1--1,|0||-1--1--1,1|(631,33)|
-10,8,alokasi pengeluaran per kapita kesehatan,605,-163,75,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
-10,9,alokasi pengeluaran per kapita pendidikan,367,-150,75,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
-1,10,8,18,1,0,0,0,0,128,0,-1--1--1,,1|(718,-160)|
-10,11,pengeluaran untuk pendidikan per kapita,294,55,69,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
-1,12,11,16,0,0,0,0,0,128,0,-1--1--1,,1|(321,20)|
-1,13,9,16,1,0,0,0,0,128,0,-1--1--1,,1|(356,-93)|
-10,14,pengeluaran untuk kesehatan per kapita,905,-70,66,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
-1,15,14,18,1,0,0,0,0,128,0,-1--1--1,,1|(862,-105)|
-10,16,rasio pengeluaran untuk pendidikan,360,-24,56,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
-1,17,16,2,1,0,0,0,0,128,0,-1--1--1,,1|(415,23)|
-10,18,rasio pengeluaran untuk kesehatan,782,-100,56,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
-1,19,18,3,1,0,0,0,0,128,0,-1--1--1,,1|(709,-59)|
-10,20,Garis Kemiskinan,440,268,52,33,3,131,0,0,0,0,0,0,0,0,0,0,0,0
-12,21,48,240,253,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
-1,22,24,20,4,0,0,22,0,0,0,-1--1--1,,1|(356,253)|
-1,23,24,21,100,0,0,22,0,0,0,-1--1--1,,1|(281,253)|
-11,24,0,319,253,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
-10,25,perubahan garis kemiskinan,319,280,50,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
-10,26,fraksi perubahan garis kemiskinan,205,331,53,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
-1,27,26,25,0,0,0,0,0,128,0,-1--1--1,,1|(255,308)|
-1,28,20,24,1,0,0,0,0,128,0,-1--1--1,,1|(357,215)|
-10,29,UMK,489,355,21,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
-10,30,"rata-rata kebutuhan masyarakat miskin per bulan",603,285,71,28,8,3,0,0,0,0,0,0,0,0,0,0,0,0
-1,31,20,30,1,0,0,0,0,128,0,-1--1--1,,1|(525,261)|
-1,32,29,30,1,0,0,0,0,128,0,-1--1--1,,1|(544,342)|
-10,33,upah tenaga kerja miskin,787,288,57,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
-1,34,30,33,0,0,0,0,0,128,0,-1--1--1,,1|(695,286)|
-10,35,kenaikan upah tenaga kerja miskin,707,176,69,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
-1,36,35,33,1,0,0,0,0,128,0,-1--1--1,,1|(716,240)|
-1,37,4,35,1,0,0,0,0,128,0,-1--1--1,,1|(684,123)|
-10,38,Populasi MBR,594,540,40,20,3,3,0,0,0,0,0,0,0,0,0,0,0,0
-12,39,48,779,539,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
-1,40,42,39,4,0,0,22,0,0,0,-1--1--1,,1|(737,541)|
-1,41,42,38,100,0,0,22,0,0,0,-1--1--1,,1|(664,541)|
-11,42,0,700,541,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
-10,43,MBR sejahtera,700,560,48,11,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
-12,44,48,391,542,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
-1,45,47,38,4,0,0,22,0,0,0,-1--1--1,,1|(516,545)|
-1,46,47,44,100,0,0,22,0,0,0,-1--1--1,,1|(434,545)|
-11,47,0,473,545,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
-10,48,peningkatan Populasi MBR,473,572,47,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
-1,49,38,42,1,0,0,0,0,128,0,-1--1--1,,1|(660,527)|
-1,50,38,47,1,0,0,0,0,128,0,-1--1--1,,1|(508,525)|
-10,51,rasio penghasilan MBR terhadap UMK,610,401,74,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
-1,52,33,51,1,0,0,0,0,128,0,-1--1--1,,1|(734,363)|
-1,53,29,51,1,0,0,0,0,128,0,-1--1--1,,1|(508,368)|
-1,54,51,42,1,0,0,0,0,128,0,-1--1--1,,1|(679,465)|
-10,55,"ft pertumbuhan populasi MBR (?)",330,606,58,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
-1,56,55,48,1,0,0,0,0,128,0,-1--1--1,,1|(380,570)|
-10,57,Lookup UMK,353,398,47,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
-1,58,57,29,1,0,0,0,0,128,0,-1--1--1,,1|(420,376)|
+$192-192-192,0,Times New Roman|12||0-0-0|0-0-0|0-0-255|-1--1--1|-1--1--1|96,96,100,0
+10,1,kualitas lingkungan,906,177,58,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,2,kualitas pendidikan,539,201,60,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,3,kualitas kesehatan,677,131,57,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,4,kualitas SDM,688,245,44,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,5,2,4,1,0,0,0,2,129,0,-1--1--1,|12||0-0-0,1|(611,208)|
+1,6,1,4,1,0,0,0,2,129,0,-1--1--1,|12||0-0-0,1|(791,193)|
+1,7,3,4,1,0,0,0,2,129,0,-1--1--1,|12||0-0-0,1|(696,181)|
+10,8,rasio pengeluaran untuk pendidikan,434,110,56,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,9,8,2,1,0,0,0,0,128,0,-1--1--1,,1|(481,166)|
+10,10,rasio pengeluaran untuk kesehatan,760,23,56,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,11,10,3,1,0,0,0,0,128,0,-1--1--1,,1|(725,99)|
+10,12,Garis Kemiskinan,544,799,52,33,3,131,0,0,0,0,0,0,0,0,0,0,0,0
+12,13,48,344,784,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,14,16,12,4,0,0,22,0,0,0,-1--1--1,,1|(460,784)|
+1,15,16,13,100,0,0,22,0,0,0,-1--1--1,,1|(385,784)|
+11,16,48,423,784,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,17,perubahan garis kemiskinan,423,810,45,18,40,131,0,0,-1,0,0,0,0,0,0,0,0,0
+10,18,fraksi perubahan garis kemiskinan per tahun,239,810,70,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,19,12,17,1,0,0,0,0,128,0,-1--1--1,,1|(471,845)|
+10,20,UMK,593,886,21,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,21,"rata-rata kebutuhan konsumsi dan lainnya MBR per bulan",713,812,87,28,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,22,12,21,1,0,0,0,0,128,0,-1--1--1,,1|(632,789)|
+1,23,20,21,1,0,0,0,0,128,0,-1--1--1,,1|(651,873)|
+10,24,"rata-rata upah tenaga kerja MBR per kapita",904,817,71,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,25,21,24,0,0,0,0,0,128,0,-1--1--1,,1|(809,814)|
+10,26,kenaikan upah tenaga kerja MBR,882,733,69,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,27,26,24,1,0,0,0,0,128,0,-1--1--1,,1|(879,770)|
+10,28,Populasi MBR,700,1145,40,20,3,3,0,0,0,0,0,0,0,0,0,0,0,0
+12,29,48,885,1144,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,30,32,29,4,0,0,22,0,0,0,-1--1--1,,1|(843,1146)|
+1,31,32,28,100,0,0,22,0,0,0,-1--1--1,,1|(770,1146)|
+11,32,48,806,1146,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,33,MBR sejahtera,806,1165,48,11,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+12,34,48,497,1147,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,35,37,28,4,0,0,22,0,0,0,-1--1--1,,1|(622,1150)|
+1,36,37,34,100,0,0,22,0,0,0,-1--1--1,,1|(540,1150)|
+11,37,48,579,1150,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,38,peningkatan Populasi MBR,579,1177,47,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,39,28,32,1,0,0,0,0,128,0,-1--1--1,,1|(766,1132)|
+1,40,28,37,1,0,0,0,0,128,0,-1--1--1,,1|(614,1130)|
+10,41,rasio penghasilan MBR terhadap UMK,714,932,74,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,42,24,41,1,0,0,0,0,128,0,-1--1--1,,1|(847,897)|
+1,43,20,41,1,0,0,0,0,128,0,-1--1--1,,1|(612,899)|
+10,44,"ft pertumbuhan populasi MBR (?)",436,1211,58,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,45,44,38,1,0,0,0,0,128,0,-1--1--1,,1|(486,1175)|
+10,46,Lookup UMK,482,983,47,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,47,46,20,1,0,0,0,0,128,0,-1--1--1,,1|(523,926)|
+10,48,efek rasio penghasian MBR thd UMK denan MBR sejahtera,841,1057,88,28,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,49,41,48,1,0,0,0,0,128,0,-1--1--1,,1|(821,987)|
+1,50,48,32,1,0,0,0,0,128,0,-1--1--1,,1|(816,1124)|
+10,51,tabel fraksi perubahan garius kemiskinan per tahun,238,713,70,28,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,52,Time,-226,150,26,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128,0,0,0,0,0,0
+10,53,INDEKS WAKTU,-152,211,31,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,54,SATUAN INDEKS WAKTU,-66,154,66,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,55,52,53,1,0,0,0,0,128,0,-1--1--1,,1|(-204,181)|
+1,56,54,53,1,0,0,0,0,128,0,-1--1--1,,1|(-104,187)|
+10,57,INDEKS WAKTU,174,901,36,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128,0,0,0,0,0,0
+1,58,51,18,0,0,0,0,0,128,0,-1--1--1,,1|(238,758)|
+1,59,57,18,0,0,0,0,0,128,0,-1--1--1,,1|(201,861)|
+10,60,waktu penyesuaian transisi MBR ke sejahtera,939,1190,82,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,61,60,33,1,0,0,0,0,128,0,-1--1--1,,1|(829,1188)|
+10,62,INDEKS WAKTU,463,913,36,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128,0,0,0,0,0,0
+1,63,62,20,0,0,0,0,0,128,0,-1--1--1,,1|(528,899)|
+10,64,Backlog Perumahan dan PSU Relative,984,95,69,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128,0,0,0,0,0,0
+1,65,64,1,1,0,0,0,0,128,0,-1--1--1,,1|(936,141)|
+10,66,Fraksi perubahan UMK,616,997,56,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,67,66,20,1,0,0,0,0,128,0,-1--1--1,,1|(595,925)|
+10,68,Pengeluaran untuk Kebutuhan Kesehatan ydi,887,-39,71,28,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128,0,0,0,0,0,0
+1,69,68,10,1,0,0,0,0,128,0,-1--1--1,,1|(844,9)|
+10,70,Pengeluaran untuk Kebutuhan Pendidikan ydi,257,143,72,28,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128,0,0,0,0,0,0
+1,71,70,8,1,0,0,0,0,128,0,-1--1--1,,1|(350,142)|
+10,72,Produktivitas MBR,718,408,57,29,3,131,0,0,0,0,0,0,0,0,0,0,0,0
+12,73,48,451,416,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,74,76,72,4,0,0,22,0,0,0,-1--1--1,,1|(614,416)|
+1,75,76,73,100,0,0,22,0,0,0,-1--1--1,,1|(508,416)|
+11,76,48,561,416,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,77,laju pengubah produktivitas MBR,561,443,61,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,78,4,76,1,0,0,0,0,128,0,-1--1--1,,1|(586,352)|
+1,79,72,76,1,0,0,0,0,128,0,-1--1--1,,1|(617,388)|
+10,80,Produktivitas MBR Awal,716,492,42,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,81,produktivitas MBR relative,886,487,61,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,82,72,81,0,0,0,0,0,128,0,-1--1--1,,1|(803,447)|
+1,83,80,81,0,0,0,0,0,128,0,-1--1--1,,1|(784,489)|
+1,84,80,72,0,0,0,0,0,128,1,-1--1--1,,1|(716,461)|
+10,85,efek produktivitas MBR thd kenaikan upah tenaha kerja mbr,885,604,89,28,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,86,85,26,1,0,0,0,0,128,0,-1--1--1,,1|(873,675)|
+1,87,81,85,1,0,0,0,0,128,0,-1--1--1,,1|(864,523)|
+10,88,aktual pengeluaran untuk pendidikan,335,33,62,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|0||128-128-128,0,0,0,0,0,0
+1,89,88,8,1,0,0,0,0,128,0,-1--1--1,,1|(405,75)|
+10,90,aktual pengeluaran untuk kesehatan,628,-58,62,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|0||128-128-128,0,0,0,0,0,0
+1,91,90,10,1,0,0,0,0,128,0,-1--1--1,,1|(667,-17)|
+10,92,fr laju pengubah produktivitas MBR,449,347,61,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,93,92,76,1,0,0,0,0,128,0,-1--1--1,,1|(525,382)|
+10,94,"rata-rata kebutuhan konsumsi dan lainnya MBR per bulan",530,554,87,28,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|0||128-128-128,0,0,0,0,0,0
+1,95,94,80,1,0,0,0,0,128,1,-1--1--1,,1|(638,501)|
+1,96,18,17,0,0,0,0,0,128,0,-1--1--1,,1|(336,810)|
+10,97,jumlah bulan dalam 1 tahun,706,585,61,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,98,97,80,0,0,0,0,0,128,1,-1--1--1,,1|(709,545)|
 \\\---/// Sketch information - do not modify anything except names
 V300  Do not put anything below this section - it will be ignored
-*View 3
-$192-192-192,0,Times New Roman|12||0-0-0|0-0-0|0-0-255|-1--1--1|-1--1--1|96,96,120,0
+*Kas MBR
+$192-192-192,0,Times New Roman|12||0-0-0|0-0-0|0-0-255|-1--1--1|-1--1--1|96,96,90,0
+10,1,Pengeluaran untuk Kebutuhan Pendidikan ydi,681,36,68,32,3,131,0,0,0,0,0,0,0,0,0,0,0,0
+12,2,48,387,32,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,3,5,1,4,0,0,22,0,0,0,-1--1--1,,1|(553,33)|
+1,4,5,2,100,0,0,22,0,0,0,-1--1--1,,1|(439,33)|
+11,5,48,488,33,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,6,peningkatan pengeluaran untuk kebutuhan pendidikan ydi,488,69,89,28,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,7,fr peningklatan pengeluaran untuk kebutuhan pendidikan ydi,414,168,89,28,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,8,7,6,0,0,0,0,0,128,0,-1--1--1,,1|(446,124)|
+1,9,1,5,1,0,0,0,0,128,0,-1--1--1,,1|(540,7)|
+10,10,Pengeluaran untuk Kebutuhan Kesehatan ydi,682,-192,68,32,3,131,0,0,0,0,0,0,0,0,0,0,0,0
+12,11,48,388,-196,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,12,14,10,4,0,0,22,0,0,0,-1--1--1,,1|(554,-195)|
+1,13,14,11,100,0,0,22,0,0,0,-1--1--1,,1|(440,-195)|
+11,14,48,489,-195,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,15,peningkatan pengeluaran untuk kebutuhan kesehatan ydi,489,-159,86,28,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,16,fr peningklatan pengeluaran untuk kebutuhan kesehatan ydi,329,-88,86,28,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,17,16,15,0,0,0,0,0,128,0,-1--1--1,,1|(402,-119)|
+1,18,10,14,1,0,0,0,0,128,0,-1--1--1,,1|(541,-221)|
+10,19,rasio pengeluaran untuk kebutuhan kesehatan ydi,839,-84,78,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,20,rasio pengeluaran untuk kebutuhan pendidikan ydi,584,-83,81,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,21,10,19,0,0,0,0,0,128,0,-1--1--1,,1|(763,-135)|
+1,22,1,19,0,0,0,0,0,128,0,-1--1--1,,1|(762,-27)|
+1,23,19,20,0,0,0,0,0,128,0,-1--1--1,,1|(719,-83)|
+10,24,Pengeluaran untuk Konsumsi dan Kebutuhan Lainnya ydi,1872,14,77,42,3,131,0,0,0,0,0,0,0,0,0,0,0,0
+12,25,48,1571,17,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,26,28,24,4,0,0,22,0,0,0,-1--1--1,,1|(1737,17)|
+1,27,28,25,100,0,0,22,0,0,0,-1--1--1,,1|(1624,17)|
+11,28,48,1674,17,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,29,peningkatan pengeluaran untuk konsumsi dan kebutuhan lainnya ydi,1674,53,78,28,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,30,24,28,1,0,0,0,0,128,0,-1--1--1,,1|(1737,-25)|
+10,31,fr peningklatan pengeluaran untuk konsumsi dan kebutuhan lainnya ydi,1439,68,97,28,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,32,31,29,1,0,0,0,0,128,0,-1--1--1,,1|(1562,87)|
+10,33,pengeluaran untuk konsumsi dan kebutuhan lainnya,1744,-104,78,28,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,34,24,33,0,0,0,0,0,128,0,-1--1--1,,1|(1805,-47)|
+10,35,sisa alokasi pengeluaran,1744,-189,39,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,36,33,35,0,0,0,0,0,128,0,-1--1--1,,1|(1744,-144)|
+10,37,aktual pengeluaran untuk pendidikan,1561,-268,59,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,38,aktual pengeluaran untuk kesehatan,1904,-266,59,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,39,35,112,0,0,0,0,0,128,0,-1--1--1,,1|(1667,-189)|
+10,40,Kas MBR per Kapita,1523,587,40,20,3,3,0,0,0,0,0,0,0,0,0,0,0,0
+12,41,48,1346,587,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,42,44,40,4,0,0,22,0,0,0,-1--1--1,,1|(1447,587)|
+1,43,44,41,100,0,0,22,0,0,0,-1--1--1,,1|(1378,587)|
+11,44,48,1406,587,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,45,pendapatan MBR,1406,606,56,11,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,46,"rata-rata upah tenaga kerja MBR per kapita",1354,680,75,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128,0,0,0,0,0,0
+1,47,46,45,1,0,0,0,0,128,0,-1--1--1,,1|(1372,629)|
+10,48,total pengeluaran ydi,1805,715,54,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,49,total pengeluaran ydi,1629,359,55,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128,0,0,0,0,0,0
+10,50,pengeluaran yang dibutuhkan awal,1505,417,55,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,51,kas ydi,1763,429,24,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,52,ketersediaan kas,1650,516,53,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,53,kas awal,1505,513,29,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,54,efek ketersediaan kas,1814,532,54,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,55,53,40,0,0,0,0,0,128,1,-1--1--1,,1|(1510,538)|
+1,56,50,53,0,0,0,0,0,128,1,-1--1--1,,1|(1505,462)|
+1,57,49,50,0,0,0,0,0,128,0,-1--1--1,,1|(1573,385)|
+10,58,waktu kecukupan kas,1644,426,48,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,59,49,51,0,0,0,0,0,128,0,-1--1--1,,1|(1696,394)|
+1,60,58,51,0,0,0,0,0,128,0,-1--1--1,,1|(1708,427)|
+1,61,58,53,0,0,0,0,0,128,1,-1--1--1,,1|(1573,469)|
+1,62,40,52,0,0,0,0,0,128,0,-1--1--1,,1|(1587,550)|
+1,63,52,54,0,0,0,0,0,128,0,-1--1--1,,1|(1724,522)|
+1,64,51,52,0,0,0,0,0,128,0,-1--1--1,,1|(1712,468)|
+12,65,48,1711,585,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,66,68,65,4,0,0,22,0,0,0,-1--1--1,,1|(1669,585)|
+1,67,68,40,100,0,0,22,0,0,0,-1--1--1,,1|(1594,585)|
+11,68,48,1632,585,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,69,pengeluaran MBR,1632,604,57,11,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,70,pengeluaran MBR,1545,-106,43,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128,0,0,0,0,0,0
+1,71,70,33,0,0,0,0,0,128,0,-1--1--1,,1|(1620,-105)|
+1,72,48,69,1,0,0,0,0,128,0,-1--1--1,,1|(1746,637)|
+1,73,54,68,1,0,0,0,0,128,0,-1--1--1,,1|(1684,554)|
+10,74,Pengeluaran untuk Kebutuhan Kesehatan ydi,2038,649,71,28,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128,0,0,0,0,0,0
+10,75,Pengeluaran untuk Kebutuhan Pendidikan ydi,2046,760,72,28,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128,0,0,0,0,0,0
+10,76,Pengeluaran untuk Konsumsi dan Kebutuhan Lainnya ydi,1917,834,82,28,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128,0,0,0,0,0,0
+1,77,76,48,1,0,0,0,0,128,0,-1--1--1,,1|(1845,760)|
+1,78,75,48,1,0,0,0,0,128,0,-1--1--1,,1|(1922,725)|
+1,79,74,48,1,0,0,0,0,128,0,-1--1--1,,1|(1901,668)|
+10,80,"rata-rata kebutuhan konsumsi dan lainnya MBR per bulan",1901,215,87,28,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128,0,0,0,0,0,0
+10,81,Pengeluaran untuk Konsumsi dan Kebutuhan Lainnya ydi Awal,1902,121,92,28,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,82,80,81,0,0,0,0,0,128,1,-1--1--1,,1|(1901,175)|
+1,83,81,24,0,0,0,0,0,128,1,-1--1--1,,1|(1891,81)|
+10,84,Pengeluaran untuk Kebutuhan Pendidikan ydi Awal,683,135,84,28,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,85,84,1,0,0,0,0,0,128,1,-1--1--1,,1|(682,94)|
+10,86,Pengeluaran untuk Kebutuhan Pendidikan ydi per Bulan,682,230,84,28,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,87,86,84,0,0,0,0,0,128,0,-1--1--1,,1|(682,190)|
+10,88,Pengeluaran untuk Kebutuhan Kesehatan ydi Awal,678,-286,82,28,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,89,Pengeluaran untuk Kebutuhan Kesehatan ydi per Bulan,677,-381,82,28,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,90,Iuran BPSJ per Bulan per Orang,474,-382,53,19,8,3,0,2,0,0,0,0,0-0-0,0-0-0,|12||0-0-255,0,0,0,0,0,0
+1,91,90,89,0,0,0,0,0,128,0,-1--1--1,,1|(554,-381)|
+1,92,89,88,0,0,0,0,0,128,0,-1--1--1,,1|(677,-341)|
+1,93,88,10,0,0,0,0,0,128,1,-1--1--1,,1|(679,-247)|
+10,94,rasio pengeluaran untuk kebutuhan pendidikan ydi,1365,-191,86,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128,0,0,0,0,0,0
+10,95,rasio pengeluaran untuk kebutuhan kesehatan ydi,2099,-189,83,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128,0,0,0,0,0,0
+1,96,95,117,0,0,0,0,0,128,0,-1--1--1,,1|(1998,-187)|
+10,97,Pengeluaran untuk Kebutuhan Kesehatan ydi,1906,-367,71,28,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128,0,0,0,0,0,0
+10,98,Pengeluaran untuk Kebutuhan Pendidikan ydi,1551,-367,72,28,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|12||128-128-128,0,0,0,0,0,0
+10,99,sisa alokasi dari pendidikan,1369,-276,50,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,100,sisa alokasi dari kesehatan,2102,-271,50,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,101,70,35,0,0,0,0,0,128,0,-1--1--1,,1|(1640,-144)|
+10,102,jumlah bulan dalam 1 tahun,881,-289,49,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|0||128-128-128,0,0,0,0,0,0
+10,103,jumlah bulan dalam 1 tahun,856,131,49,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|0||128-128-128,0,0,0,0,0,0
+10,104,jumlah bulan dalam 1 tahun,2138,120,49,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|0||128-128-128,0,0,0,0,0,0
+1,105,104,81,0,0,0,0,0,128,1,-1--1--1,,1|(2048,120)|
+1,106,102,88,1,0,0,0,0,128,0,-1--1--1,,1|(799,-298)|
+1,107,103,84,0,0,0,0,0,128,0,-1--1--1,,1|(793,132)|
+10,108,jumlah bulan dalam 1 tahun,1191,601,49,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|0||128-128-128,0,0,0,0,0,0
+1,109,108,45,0,0,0,0,0,128,0,-1--1--1,,1|(1288,602)|
+1,110,98,37,0,0,0,0,0,128,0,-1--1--1,,1|(1555,-319)|
+1,111,97,38,0,0,0,0,0,128,0,-1--1--1,,1|(1905,-318)|
+10,112,potensi pengeluaran untuk pendidikan,1554,-192,63,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,113,94,112,0,0,0,0,0,128,0,-1--1--1,,1|(1464,-191)|
+1,114,112,37,0,0,0,0,0,128,0,-1--1--1,,1|(1556,-223)|
+1,115,112,99,0,0,0,0,0,128,0,-1--1--1,,1|(1467,-231)|
+1,116,37,99,0,0,0,0,0,128,0,-1--1--1,,1|(1467,-271)|
+10,117,potensi pengeluaran untuk kesehatan,1905,-185,63,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,118,35,117,0,0,0,0,0,128,0,-1--1--1,,1|(1805,-187)|
+1,119,38,100,0,0,0,0,0,128,0,-1--1--1,,1|(2000,-267)|
+1,120,117,100,0,0,0,0,0,128,0,-1--1--1,,1|(1996,-225)|
+1,121,117,38,0,0,0,0,0,128,0,-1--1--1,,1|(1904,-218)|
 ///---\\\
 :L<%^E!@
-9:Current
+1:Baseline.vdfx
+9:Baseline
 15:0,0,0,0,0,0
-19:140,1
+19:100,0
 27:0,
 34:0,
 42:1
 72:0
 73:0
-5:MBR sejahtera
+4:Time
+5:kenaikan upah tenaga kerja MBR
 35:Date
 36:YYYY-MM-DD
 37:2000
@@ -317,14 +825,14 @@ $192-192-192,0,Times New Roman|12||0-0-0|0-0-0|0-0-255|-1--1--1|-1--1--1|96,96,1
 39:1
 40:2
 41:0
-76:0
-77:0
+76:1
+77:1
 78:0
-79:0
-80:0
+79:1
+80:1
 81:0
-24:0
-25:0
-26:0
+24:2000
+25:2030
+26:2030
 75:
 43:
