@@ -1,0 +1,195 @@
+{UTF-8}
+Alokasi Pengeluaran Kesehatan  = A FUNCTION OF( Sisa Alokasi Pengeluaran)
+	~	
+	~		|
+
+Alokasi Pengeluaran Pendidikan  = A FUNCTION OF( Sisa Alokasi Pengeluaran)
+	~	
+	~		|
+
+Backlog Hunian dan PSU  = A FUNCTION OF( Hunian dan PSU yang dibutuhkan,Jumlah Hunian dan PSU\
+		)
+	~	
+	~		|
+
+Garis Kemiskinan  = A FUNCTION OF( )
+	~	
+	~		|
+
+Hunian dan PSU yang dibutuhkan  = A FUNCTION OF( Populasi MBR)
+	~	
+	~		|
+
+Jumlah Hunian dan PSU  = A FUNCTION OF( Pembangunan Hunian dan PSU)
+	~	
+	~		|
+
+Kas MBR  = A FUNCTION OF( Pendapatan Tenaga Kerja MBR,Pengeluaran Konsumsi)
+	~	
+	~		|
+
+Ketersediaan Dana Bantuan Pemerintah  = A FUNCTION OF( )
+	~	
+	~		|
+
+Ketersediaan Lahan  = A FUNCTION OF( )
+	~	
+	~		|
+
+Kualitas Lingkungan  = A FUNCTION OF( Jumlah Hunian dan PSU)
+	~	
+	~		|
+
+Kualitas SDM MBR  = A FUNCTION OF( Alokasi Pengeluaran Kesehatan,Alokasi Pengeluaran Pendidikan\
+		,Kualitas Lingkungan)
+	~	
+	~		|
+
+MBR Sejahtera  = A FUNCTION OF( Garis Kemiskinan,Pendapatan Tenaga Kerja MBR,UMK Daerah\
+		)
+	~	
+	~		|
+
+Pembangunan Hunian dan PSU  = A FUNCTION OF( Backlog Hunian dan PSU,Ketersediaan Dana Bantuan Pemerintah\
+		,Ketersediaan Lahan)
+	~	
+	~		|
+
+Pendapatan Tenaga Kerja MBR  = A FUNCTION OF( Peningkatan Penghasilan MBR)
+	~	
+	~		|
+
+Pengeluaran Konsumsi  = A FUNCTION OF( Pendapatan Tenaga Kerja MBR)
+	~	
+	~		|
+
+Peningkatan Penghasilan MBR  = A FUNCTION OF( Produktivitas MBR)
+	~	
+	~		|
+
+Populasi MBR  = A FUNCTION OF( MBR Sejahtera)
+	~	
+	~		|
+
+Produktivitas MBR  = A FUNCTION OF( Kualitas SDM MBR)
+	~	
+	~		|
+
+Sisa Alokasi Pengeluaran  = A FUNCTION OF( Pengeluaran Konsumsi)
+	~	
+	~		|
+
+UMK Daerah  = A FUNCTION OF( )
+	~	
+	~		|
+
+********************************************************
+	.Control
+********************************************************~
+		Simulation Control Parameters
+	|
+
+FINAL TIME  = 100
+	~	Month
+	~	The final time for the simulation.
+	|
+
+INITIAL TIME  = 0
+	~	Month
+	~	The initial time for the simulation.
+	|
+
+SAVEPER  = 
+        TIME STEP 
+	~	Month [0,?]
+	~	The frequency with which output is stored.
+	|
+
+TIME STEP  = 1
+	~	Month [0,?]
+	~	The time step for the simulation.
+	|
+
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*View 1
+$192-192-192,0,Times New Roman|12||0-0-0|0-0-0|0-0-255|-1--1--1|-1--1--1|96,96,100,0
+10,1,Populasi MBR,487,439,47,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,2,MBR Sejahtera,451,572,50,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,3,2,1,1,0,45,0,3,128,0,255-0-0,|0||-1--1--1,1|(452,476)|
+10,4,UMK Daerah,447,662,45,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,5,Pendapatan Tenaga Kerja MBR,622,631,63,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,6,5,2,1,0,43,0,2,128,0,-1--1--1,|0||-1--1--1,1|(503,610)|
+1,7,4,2,1,0,45,0,3,128,0,255-0-0,|0||-1--1--1,1|(442,629)|
+10,8,Garis Kemiskinan,314,612,56,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,9,8,2,1,0,45,0,3,128,0,255-0-0,|0||-1--1--1,1|(375,585)|
+10,10,Peningkatan Penghasilan MBR,670,516,57,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,11,Produktivitas MBR,780,451,42,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,12,11,10,1,0,43,0,2,128,0,-1--1--1,|0||-1--1--1,1|(740,499)|
+1,13,10,5,1,0,43,0,2,128,0,-1--1--1,|0||-1--1--1,1|(622,579)|
+10,14,Kualitas SDM MBR,850,364,46,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,15,14,11,1,0,43,0,2,128,0,-1--1--1,|0||-1--1--1,1|(843,405)|
+10,16,Alokasi Pengeluaran Kesehatan,974,265,65,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,17,Alokasi Pengeluaran Pendidikan,957,442,65,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,18,Kualitas Lingkungan,773,271,37,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,19,16,14,1,0,43,0,2,128,0,-1--1--1,|0||-1--1--1,1|(882,284)|
+1,20,17,14,1,0,43,0,2,128,0,-1--1--1,|0||-1--1--1,1|(926,379)|
+1,21,18,14,1,0,43,0,2,128,0,-1--1--1,|0||-1--1--1,1|(815,312)|
+10,22,Pengeluaran Konsumsi,815,651,39,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,23,Sisa Alokasi Pengeluaran,992,536,40,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,24,23,16,1,0,43,0,2,128,0,-1--1--1,|0||-1--1--1,1|(1138,394)|
+1,25,23,17,1,0,43,0,2,128,0,-1--1--1,|0||-1--1--1,1|(964,505)|
+1,26,22,23,1,0,45,0,3,128,0,255-0-0,|0||-1--1--1,1|(985,551)|
+1,27,5,22,1,0,43,0,2,128,0,-1--1--1,|0||-1--1--1,1|(709,665)|
+10,28,Kas MBR,756,573,34,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,29,5,28,1,0,43,0,2,128,0,-1--1--1,|0||-1--1--1,1|(687,593)|
+1,30,22,28,1,0,45,0,3,128,0,255-0-0,|0||-1--1--1,1|(808,601)|
+12,31,0,833,508,20,20,5,7,0,0,-1,0,0,0,0,0,0,0,0,0
+B
+10,32,Pembangunan Hunian dan PSU,430,255,54,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,33,Jumlah Hunian dan PSU,630,255,46,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,34,Hunian dan PSU yang dibutuhkan,605,392,54,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,35,1,34,1,0,43,0,2,128,0,-1--1--1,|0||-1--1--1,1|(558,444)|
+1,36,34,43,1,0,43,0,2,128,0,-1--1--1,|0||-1--1--1,1|(517,384)|
+1,37,32,33,1,0,43,0,2,128,0,-1--1--1,|0||-1--1--1,1|(561,236)|
+1,38,33,18,1,0,43,0,2,128,0,-1--1--1,|0||-1--1--1,1|(689,296)|
+10,39,Ketersediaan Dana Bantuan Pemerintah,354,358,64,19,8,3,0,2,0,0,0,0,0-0-0,0-0-0,|0||0-0-255,0,0,0,0,0,0
+1,40,39,32,1,0,43,0,2,128,0,-1--1--1,|0||-1--1--1,1|(365,300)|
+10,41,Ketersediaan Lahan,366,201,43,19,8,3,0,2,0,0,0,0,0-0-0,0-0-0,|0||0-0-255,0,0,0,0,0,0
+1,42,41,32,1,0,43,0,2,128,0,-1--1--1,|0||-1--1--1,1|(368,236)|
+10,43,Backlog Hunian dan PSU,504,335,51,19,8,131,0,0,0,0,0,0,0,0,0,0,0,0
+1,44,33,43,1,0,45,0,3,128,0,255-0-0,|0||-1--1--1,1|(571,326)|
+1,45,43,32,1,0,43,0,2,128,0,-1--1--1,|0||-1--1--1,1|(488,288)|
+12,46,0,705,401,40,20,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+12,47,0,646,442,20,20,4,7,0,0,-1,0,0,0,0,0,0,0,0,0
+B
+12,48,0,544,283,20,20,4,7,0,0,-1,0,0,0,0,0,0,0,0,0
+B
+///---\\\
+:L<%^E!@
+15:0,0,0,0,0,0
+19:100,0
+27:0,
+34:0,
+42:1
+72:0
+73:0
+5:Backlog Hunian dan PSU
+35:Date
+36:YYYY-MM-DD
+37:2000
+38:1
+39:1
+40:2
+41:0
+76:0
+77:0
+78:0
+79:0
+80:0
+81:0
+24:0
+25:0
+26:0
+75:
+43:
